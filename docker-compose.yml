@@ -1,0 +1,28 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq/
+  eureka-server:
+    build:
+      context: ./eurekaserver
+      dockerfile: Dockerfile
+    container_name: eureka-server
+    ports:
+      - '8761:8761'
+    expose:
+      - 8761
+  cloud-gateway:
+    build:
+      context: ./mscloudgateway
+      dockerfile: Dockerfile
+    container_name: cloud-gateway
+    ports:
+      - '8080:8080'
+    expose:
+      - 8080

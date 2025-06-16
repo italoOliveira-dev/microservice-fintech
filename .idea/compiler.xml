@@ -10,7 +10,7 @@
         <module name="eurekaserver" />
         <module name="mscloudgateway" />
       </profile>
-      <profile name="Annotation profile for msavaliadorcredito" enabled="true">
+      <profile name="Annotation profile for mscartoes" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
