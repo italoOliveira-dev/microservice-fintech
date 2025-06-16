@@ -10,7 +10,7 @@
         <module name="eurekaserver" />
         <module name="mscloudgateway" />
       </profile>
-      <profile name="Annotation profile for mscartoes" enabled="true">
+      <profile name="Annotation profile for msavaliadorcredito" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -19,12 +19,14 @@
         </processorPath>
         <module name="mscartoes" />
         <module name="mscliente" />
+        <module name="msavaliadorcredito" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="eurekaserver" options="-parameters" />
+      <module name="msavaliadorcredito" options="-parameters" />
       <module name="mscartoes" options="-parameters" />
       <module name="mscliente" options="-parameters" />
       <module name="mscloudgateway" options="-parameters" />
