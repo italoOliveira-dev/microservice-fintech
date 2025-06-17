@@ -1,8 +1,10 @@
 package br.com.italooliveira.msavaliadorcredito.service;
 
 import br.com.italooliveira.msavaliadorcredito.api.dtos.*;
+import br.com.italooliveira.msavaliadorcredito.api.exceptions.ErroSolicitacaoCartaoException;
 import br.com.italooliveira.msavaliadorcredito.infra.clients.CartoesResourceClient;
 import br.com.italooliveira.msavaliadorcredito.infra.clients.ClienteResourceClient;
+import br.com.italooliveira.msavaliadorcredito.infra.mqueue.SolicitacaoEmissaoCartaoPublisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +22,7 @@ public class AvaliadorCreditoService {
 
     private final ClienteResourceClient clientesClient;
     private final CartoesResourceClient cartoesClient;
+    private final SolicitacaoEmissaoCartaoPublisher emissaoCartaoPublisher;
 
     public SituacaoCliente obterSituacaoCliente(@RequestParam("cpf") String cpf) {
         DadosCliente dadosClienteResponse = verificarClientePeloCpf(cpf);
@@ -49,5 +53,15 @@ public class AvaliadorCreditoService {
 
     private DadosCliente verificarClientePeloCpf(String cpf) {
         return clientesClient.dadosCliente(cpf).getBody();
+    }
+
+    public ProtocoloSolicitacaoCartao solicitarEmissaoCartao(DadosSolicitacaoEmissaoCartao dados) {
+        try {
+            emissaoCartaoPublisher.solicitarCartao(dados);
+            var protocolo = UUID.randomUUID().toString();
+            return new ProtocoloSolicitacaoCartao(protocolo);
+        } catch (Exception e) {
+            throw new ErroSolicitacaoCartaoException(e.getMessage());
+        }
     }
 }

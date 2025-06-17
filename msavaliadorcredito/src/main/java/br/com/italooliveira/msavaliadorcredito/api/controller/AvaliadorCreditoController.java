@@ -1,8 +1,6 @@
 package br.com.italooliveira.msavaliadorcredito.api.controller;
 
-import br.com.italooliveira.msavaliadorcredito.api.dtos.DadosAvaliacao;
-import br.com.italooliveira.msavaliadorcredito.api.dtos.RetornoAvalicaoCliente;
-import br.com.italooliveira.msavaliadorcredito.api.dtos.SituacaoCliente;
+import br.com.italooliveira.msavaliadorcredito.api.dtos.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,4 +15,7 @@ public interface AvaliadorCreditoController {
 
     @PostMapping
     ResponseEntity<RetornoAvalicaoCliente> realizarAvaliacao(@RequestBody DadosAvaliacao dadosAvaliacao);
+
+    @PostMapping("/solicitacoes-cartoes")
+    ResponseEntity<ProtocoloSolicitacaoCartao> solicitarCartao(@RequestBody DadosSolicitacaoEmissaoCartao dados);
 }
